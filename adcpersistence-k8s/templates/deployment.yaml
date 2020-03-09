@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "valecard-jboss.fullname" . }}
+  labels:
+    {{- include "valecard-jboss.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "valecard-jboss.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "valecard-jboss.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "valecard-jboss.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+          - mountPath: /config
+            name: mgmt-users
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: management
+              containerPort: 9999
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command: 
+              - /bin/bash
+              - -c
+              - "{{ printf "[ -f /opt/jboss/jboss-as-7.2.0.Final/standalone/deployments/%s.deployed ] && true || false" .Values.ear }}"
+            initialDelaySeconds: 300
+            periodSeconds: 30
+            failureThreshold: 20
+          readinessProbe:
+            exec:
+              command: 
+              - /bin/bash
+              - -c
+              - "{{ printf "[ -f /opt/jboss/jboss-as-7.2.0.Final/standalone/deployments/%s.deployed ] && true || false" .Values.ear }}"
+            initialDelaySeconds: 300
+            periodSeconds: 30
+            failureThreshold: 20
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: mgmt-users
+          configMap:
+            name: {{ .Release.Name }}-mgmt-users
+            items:
+            - key: mgmt-users.properties
+              path: mgmt-users.properties
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

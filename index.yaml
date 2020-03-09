@@ -1,0 +1,25 @@
+apiVersion: v1
+entries:
+  frota-k8s:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-03-09T17:42:34.577276-03:00"
+    description: A Helm chart for Kubernetes
+    digest: d1afb8f2f20ee1af2688a858f6f12d3d9325a98aabaf5d19e0e9f2074549b464
+    name: frota-k8s
+    type: application
+    urls:
+    - frota-k8s-0.1.0.tgz
+    version: 0.1.0
+  valecard-jboss:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2020-03-09T17:42:34.579255-03:00"
+    description: A Helm chart for Kubernetes
+    digest: a6a6ba1cd62d4c50063e5b7593fb27aeb82e6473afde83ba02c25e01d72948cf
+    name: valecard-jboss
+    type: application
+    urls:
+    - valecard-jboss-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-03-09T17:42:34.573622-03:00"
