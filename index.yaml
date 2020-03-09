@@ -9,7 +9,7 @@ entries:
     name: frota-k8s
     type: application
     urls:
-    - frota-k8s-0.1.0.tgz
+    - https://github.com/jorgelopesbr/charts-helm/blob/gh-pages/frota-k8s-0.1.0.tgz
     version: 0.1.0
   valecard-jboss:
   - apiVersion: v2
@@ -20,6 +20,6 @@ entries:
     name: valecard-jboss
     type: application
     urls:
-    - valecard-jboss-0.1.0.tgz
+    - https://github.com/jorgelopesbr/charts-helm/blob/gh-pages/valecard-jboss-0.1.0.tgz
     version: 0.1.0
 generated: "2020-03-09T18:11:00.784192-03:00"
