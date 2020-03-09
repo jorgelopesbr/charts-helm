@@ -1,0 +1,7 @@
+  apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-mgmt-users
+data:
+  mgmt-users.properties: |
+    mgmt=f13f3b1c73eb630c1a425668f829679c

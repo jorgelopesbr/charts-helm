@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "valecard-jboss.fullname" . }}
+  labels:
+    {{- include "valecard-jboss.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 9999
+      targetPort: management
+      protocol: TCP
+      name: management
+  selector:
+    {{- include "valecard-jboss.selectorLabels" . | nindent 4 }}
