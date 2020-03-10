@@ -6,11 +6,12 @@ replicaCount: 1
 ear: "AdcPersistence-2.9.291-SNAPSHOT.ear"
 
 image:
-  repository: localhost:32000/adcpersistence-build:latest
+  repository: sa-saopaulo-1.ocir.io/gruxacaxnw3m/valecard/adcpersistence-build:latest
   pullPolicy: Always
 
 
-imagePullSecrets: []
+imagePullSecrets:
+   - ociregistry
 nameOverride: ""
 fullnameOverride: ""
 
@@ -33,7 +34,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 80
 
 ingress:
